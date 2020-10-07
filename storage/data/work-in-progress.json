@@ -1,0 +1,29 @@
+[
+    {
+        "project": "Mouse & Sasha",
+        "word_goal": 25000,
+        "current_count": 9942,
+        "start_date": "2020-10-01",
+        "end_date": null,
+        "status": "draft",
+        "active": true
+    },
+    {
+        "project": "NaNoWrio 2020 - The Call of the Dragon",
+        "word_goal": 50000,
+        "current_count": 0,
+        "start_date": "2020-11-01",
+        "end_date": "2020-11-30",
+        "status": "edit",
+        "active": true
+    },
+    {
+        "project": "The Shadowlands",
+        "word_goal": 50000,
+        "current_count": 8702,
+        "start_date": "2020-09-01",
+        "end_date": null,
+        "status": "draft",
+        "active": true
+    }
+]
