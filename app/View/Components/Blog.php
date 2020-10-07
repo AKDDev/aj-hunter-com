@@ -6,14 +6,15 @@ use Illuminate\View\Component;
 
 class Blog extends Component
 {
+    public $feed;
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($feed)
     {
-        //
+        $this->feed = $feed;
     }
 
     /**

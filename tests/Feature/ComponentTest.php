@@ -5,9 +5,26 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use App\View\Components\Blog;
 
 class ComponentTest extends TestCase
 {
+    protected $feed;
+    public function __construct()
+    {
+        parent::__construct();
+
+        $date1 = now()->toDateTimeString();
+        $date2 = now()->subDay()->ToDateTimeString();
+        $date3 = now()->subDays(2)->ToDateTimeString();
+
+        $this->feed = [
+            ['title' => 'Blog 1', 'body' => 'This is test data', 'date' => $date1],
+            ['title' => 'Blog 2', 'body' => 'This is test data 2', 'date' => $date2],
+            ['title' => 'Blog 3', 'body' => 'This is test data 3', 'date' => $date3],
+        ];
+    }
+
      /**
      * @test
      */
@@ -125,9 +142,7 @@ class ComponentTest extends TestCase
      */
     public function blog_componenet_exists()
     {
-        $view = $this->blade(
-            '<x-blog />'
-        );
+        $view = $this->component(Blog::class,['feed' => $this->feed]);
 
         $view->assertSee('id="blog"', false);
     }

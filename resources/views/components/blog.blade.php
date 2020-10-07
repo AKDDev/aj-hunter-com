@@ -1,3 +1,7 @@
 <div id="blog">
-    <!-- I begin to speak only when I am certain what I will say is not better left unsaid - Cato the Younger -->
+    @for($i = 0; $i < 2; $i++)
+        <div id="blog{{ $i + 1 }}">
+            <h3>{{ $feed[$i]['title'] }}</h3>
+        </div>
+    @endfor
 </div>

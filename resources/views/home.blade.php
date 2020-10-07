@@ -2,5 +2,5 @@
     <x-carosel id="books" />
     <x-newsletter />
     <x-work-in-progress />
-    <x-blog />
+    <x-blog :feed="$feed" />
 </x-layout>

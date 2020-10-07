@@ -8,12 +8,30 @@ use Tests\TestCase;
 
 class HomeViewTest extends TestCase
 {
+    protected $feed;
+
+    public function __construct()
+    {
+        parent::__construct();
+
+        $date1 = now()->toDateTimeString();
+        $date2 = now()->subDay()->ToDateTimeString();
+        $date3 = now()->subDays(2)->ToDateTimeString();
+
+        $this->feed = [
+            ['title' => 'Blog 1', 'body' => 'This is test data', 'date' => $date1],
+            ['title' => 'Blog 2', 'body' => 'This is test data 2', 'date' => $date2],
+            ['title' => 'Blog 3', 'body' => 'This is test data 3', 'date' => $date3],
+        ];
+    }
+
     /**
      * @test
      */
     public function home_applys_layout_componenet()
     {
-        $response = $this->view('home');
+        $feed = $this->feed;
+        $response = $this->view('home', ['feed' => $feed]);
 
         $response->assertSee('id="layout"',false);
     }
@@ -23,7 +41,8 @@ class HomeViewTest extends TestCase
      */
     public function home_has_newsletter()
     {
-        $response = $this->view('home');
+        $feed = $this->feed;
+        $response = $this->view('home', ['feed' => $feed]);
 
         $response->assertSee('id="newsletter"',false);
     }
@@ -33,7 +52,8 @@ class HomeViewTest extends TestCase
      */
     public function home_has_wip()
     {
-        $response = $this->view('home');
+        $feed = $this->feed;
+        $response = $this->view('home', ['feed' => $feed]);
 
         $response->assertSee('id="wip"',false);
     }
@@ -43,7 +63,8 @@ class HomeViewTest extends TestCase
      */
     public function home_has_blog()
     {
-        $response = $this->view('home');
+        $feed = $this->feed;
+        $response = $this->view('home', ['feed' => $feed]);
 
         $response->assertSee('id="blog"',false);
     }
@@ -53,7 +74,8 @@ class HomeViewTest extends TestCase
      */
     public function home_has_book_carosel()
     {
-        $response = $this->view('home');
+        $feed = $this->feed;
+        $response = $this->view('home', ['feed' => $feed]);
 
         $response->assertSee('id="books"',false);
     }
