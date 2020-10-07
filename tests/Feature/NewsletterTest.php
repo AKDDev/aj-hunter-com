@@ -17,10 +17,6 @@ class NewsletterTest extends TestCase
             '<x-newsletter />'
         );
 
-        $view = $this->blade(
-            '<x-newsletter />'
-        );
-
         $view->assertSee('<input type="email"', false);
         $view->assertSee('<button type="submit"', false);
         $view->assertSee('<form', false);
