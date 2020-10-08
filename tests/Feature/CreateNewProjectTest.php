@@ -32,7 +32,7 @@ class CreateNewProjectTest extends TestCase
         Status::create(['status' => 'First Draft']);
         Status::create(['status' => 'Revising']);
         Status::create(['status' => 'Published']);
-        Status::create(['status' => 'Arcived']);
+        Status::create(['status' => 'Archived']);
 
         $response = $this->actingAs($user)
             ->get('/dashboard/projects/create');
@@ -41,5 +41,30 @@ class CreateNewProjectTest extends TestCase
         $response->assertSee('Add New Project');
         $response->assertSee('<form method="post" action="'.route('projects.store').'">',false);
         $response->assertViewHas('statuses');
+        $response->assertSee('<option value="1">First Draft</option>', false);
+        $response->assertSee('<option value="2">Revising</option>', false);
+        $response->assertSee('<option value="3">Published</option>', false);
+        $response->assertSee('<option value="4">Archived</option>', false);
+    }
+
+    /**
+     * @test
+     */
+    public function submit_empty_form_returns_validation_errors()
+    {
+        $user = User::factory()->create();
+
+        $data = [
+            'project' => '',
+            'active' => '',
+            'status_id' => '',
+        ];
+
+        $response = $this->actingAs($user)
+            ->post(route('projects.store'),$data);
+
+        $response->assertStatus(302);
+        $response->assertRedirect();
+        $response->assertSessionHasErrors();
     }
 }

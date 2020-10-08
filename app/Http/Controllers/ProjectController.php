@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Projects\StoreRequest;
 use App\Models\Project;
 use App\Models\Status;
 use Illuminate\Http\Request;
@@ -23,5 +24,10 @@ class ProjectController extends Controller
 
         return view('projects.create')
             ->with('statuses',$statuses);
+    }
+
+    public function store(StoreRequest $request)
+    {
+
     }
 }
