@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Project extends Model
 {
     use HasFactory;
+
+    public $fillable = ['project','active','status_id'];
+
+    public function status()
+    {
+        return $this->belongsTo(Status::class);
+    }
 }
