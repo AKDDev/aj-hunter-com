@@ -1,42 +1,36 @@
-@extends('layouts.app')
+<x-guest-layout>
+    <x-jet-authentication-card>
+        <x-slot name="logo">
+            <x-jet-authentication-card-logo />
+        </x-slot>
 
-@section('content')
-    @if ($errors->any())
-        <div>
-            <div>{{ __('Whoops! Something went wrong.') }}</div>
+        <x-jet-validation-errors class="mb-4" />
 
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
+        <form method="POST" action="{{ route('password.update') }}">
+            @csrf
 
-    <form method="POST" action="{{ route('password.update') }}">
-        @csrf
+            <input type="hidden" name="token" value="{{ $request->route('token') }}">
 
-        <input type="hidden" name="token" value="{{ $request->route('token') }}">
+            <div class="block">
+                <x-jet-label for="email" value="{{ __('Email') }}" />
+                <x-jet-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email', $request->email)" required autofocus />
+            </div>
 
-        <div>
-        	<label>{{ __('Email') }}</label>
-        	<input type="email" name="email" value="{{ old('email', $request->email) }}" required autofocus />
-        </div>
+            <div class="mt-4">
+                <x-jet-label for="password" value="{{ __('Password') }}" />
+                <x-jet-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" />
+            </div>
 
-        <div>
-            <label>{{ __('Password') }}</label>
-            <input type="password" name="password" required autocomplete="new-password" />
-        </div>
+            <div class="mt-4">
+                <x-jet-label for="password_confirmation" value="{{ __('Confirm Password') }}" />
+                <x-jet-input id="password_confirmation" class="block mt-1 w-full" type="password" name="password_confirmation" required autocomplete="new-password" />
+            </div>
 
-        <div>
-            <label>{{ __('Confirm Password') }}</label>
-            <input type="password" name="password_confirmation" required autocomplete="new-password" />
-        </div>
-
-        <div>
-            <button type="submit">
-                {{ __('Reset Password') }}
-            </button>
-        </div>
-    </form>
-@endsection
+            <div class="flex items-center justify-end mt-4">
+                <x-jet-button>
+                    {{ __('Reset Password') }}
+                </x-jet-button>
+            </div>
+        </form>
+    </x-jet-authentication-card>
+</x-guest-layout>

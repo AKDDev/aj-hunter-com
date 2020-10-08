@@ -1,47 +1,57 @@
-@if ($errors->any())
-    <div>
-        <div>{{ __('Whoops! Something went wrong.') }}</div>
+<x-guest-layout>
+    <x-jet-authentication-card>
+        <x-slot name="logo">
+            <x-jet-authentication-card-logo />
+        </x-slot>
 
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
+        <div x-data="{ recovery: false }">
+            <div class="mb-4 text-sm text-gray-600" x-show="! recovery">
+                {{ __('Please confirm access to your account by entering the authentication code provided by your authenticator application.') }}
+            </div>
 
-<form method="POST" action="{{ url('/two-factor-challenge') }}">
-    @csrf
+            <div class="mb-4 text-sm text-gray-600" x-show="recovery">
+                {{ __('Please confirm access to your account by entering one of your emergency recovery codes.') }}
+            </div>
 
-    {{--
-        Do not show both of these fields, together. It's recommended
-        that you only show one field at a time and use some logic
-        to toggle the visibility of each field
-    --}}
+            <x-jet-validation-errors class="mb-4" />
 
-    <div>
-        {{ __('Please confirm access to your account by entering the authentication code provided by your authenticator application.') }}
-    </div>
+            <form method="POST" action="/two-factor-challenge">
+                @csrf
 
-    <div>
-        <label>{{ __('Code') }}</label>
-        <input type="text" name="code" autofocus autocomplete="one-time-code" />
-    </div>
+                <div class="mt-4" x-show="! recovery">
+                    <x-jet-label for="code" value="{{ __('Code') }}" />
+                    <x-jet-input id="code" class="block mt-1 w-full" type="text" name="code" autofocus x-ref="code" autocomplete="one-time-code" />
+                </div>
 
-    {{-- ** OR ** --}}
+                <div class="mt-4" x-show="recovery">
+                    <x-jet-label for="recovery_code" value="{{ __('Recovery Code') }}" />
+                    <x-jet-input id="recovery_code" class="block mt-1 w-full" type="text" name="recovery_code" x-ref="recovery_code" autocomplete="one-time-code" />
+                </div>
 
-    <div>
-        {{ __('Please confirm access to your account by entering one of your emergency recovery codes.') }}
-    </div>
+                <div class="flex items-center justify-end mt-4">
+                    <button type="button" class="text-sm text-gray-600 hover:text-gray-900 underline cursor-pointer"
+                                    x-show="! recovery"
+                                    x-on:click="
+                                        recovery = true;
+                                        $nextTick(() => { $refs.recovery_code.focus() })
+                                    ">
+                        {{ __('Use a recovery code') }}
+                    </button>
 
-    <div>
-        <label>{{ __('Recovery Code') }}</label>
-        <input type="text" name="recovery_code" autocomplete="one-time-code" />
-    </div>
+                    <button type="button" class="text-sm text-gray-600 hover:text-gray-900 underline cursor-pointer"
+                                    x-show="recovery"
+                                    x-on:click="
+                                        recovery = false;
+                                        $nextTick(() => { $refs.code.focus() })
+                                    ">
+                        {{ __('Use an authentication code') }}
+                    </button>
 
-    <div>
-        <button type="submit">
-            {{ __('Login') }}
-        </button>
-    </div>
-</form>
+                    <x-jet-button class="ml-4">
+                        {{ __('Login') }}
+                    </x-jet-button>
+                </div>
+            </form>
+        </div>
+    </x-jet-authentication-card>
+</x-guest-layout>
