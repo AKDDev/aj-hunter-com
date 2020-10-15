@@ -50,4 +50,18 @@ class ProjectsTest extends TestCase
         $response->assertSee('Project 1');
         $response->assertSee('Test');
     }
+
+    /**
+     * @test
+     */
+    public function empty_project_list_displays_message()
+    {
+        $user = User::factory()->create();
+
+        $response = $this->actingAs($user)
+            ->get('/dashboard/projects');
+
+        $response->assertStatus(200);
+        $response->assertSee('There are no projects at this time.');
+    }
 }

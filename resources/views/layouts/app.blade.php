@@ -29,6 +29,8 @@
                 </div>
             </header>
 
+            <x-flash-messages></x-flash-messages>
+
             <!-- Page Content -->
             <main>
                 {{ $slot }}

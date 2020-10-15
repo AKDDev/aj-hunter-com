@@ -14,8 +14,13 @@ class ProjectController extends Controller
         $projects = Project::with(['status'])
             ->get();
 
-        return view('projects.index')
-            ->with('projects',$projects);
+        $view = view('projects.index');
+
+        if($projects->count() == 0) {
+            $view->with('message','There are no projects at this time.');
+        }
+
+        return $view->with('projects',$projects);
     }
 
     public function create()
@@ -28,6 +33,18 @@ class ProjectController extends Controller
 
     public function store(StoreRequest $request)
     {
+        Project::create([
+            'project' => $request->get('name'),
+            'active' => $request->get('active'),
+            'status_id' => $request->get('status'),
+        ]);
+        session()->flash('success', 'Created new project successfully.');
+        return redirect()->route('projects.list');
+    }
 
+    public function show(Project $project)
+    {
+        return view('projects.show')
+            ->with('project',$project->load(['status']));
     }
 }

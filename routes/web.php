@@ -36,3 +36,6 @@ Route::middleware(['auth:sanctum', 'verified'])
 Route::middleware(['auth:sanctum', 'verified'])
     ->post('/dashboard/projects', [ProjectController::class,'store'])
     ->name('projects.store');
+
+Route::get('/projects/{project}', [ProjectController::class,'show'])
+    ->name('projects.show');
