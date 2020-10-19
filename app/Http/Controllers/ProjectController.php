@@ -7,6 +7,7 @@ use App\Models\Project;
 use App\Models\Status;
 use Illuminate\Http\Request;
 use App\Http\Requests\Projects\UpdateRequest;
+use App\Http\Requests\Projects\DeleteRequest;
 
 class ProjectController extends Controller
 {
@@ -67,6 +68,14 @@ class ProjectController extends Controller
         $project->save();
 
         session()->flash('success', 'Updated project successfully.');
+        return redirect()->route('projects.list');
+    }
+
+    public function destroy(DeleteRequest $request, Project $project)
+    {
+        $project->delete();
+
+        session()->flash('success', 'Deleted project successfully.');
         return redirect()->route('projects.list');
     }
 }

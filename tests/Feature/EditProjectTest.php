@@ -157,7 +157,7 @@ class EditProjectTest extends TestCase
     /**
      * @test
      */
-    public function required_id_field_must_be_existing_status_integer()
+    public function required_id_field_must_be_existing_project_integer()
     {
         $user = User::factory()->create();
         $project = $this->startup();

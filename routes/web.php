@@ -47,3 +47,7 @@ Route::middleware(['auth:sanctum', 'verified'])
 Route::middleware(['auth:sanctum', 'verified'])
     ->put('/dashboard/projects/{project}', [ProjectController::class,'update'])
     ->name('projects.update');
+
+    Route::middleware(['auth:sanctum', 'verified'])
+    ->delete('/dashboard/projects/{project}', [ProjectController::class,'destroy'])
+    ->name('projects.delete');
