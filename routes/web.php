@@ -41,5 +41,9 @@ Route::get('/projects/{project}', [ProjectController::class,'show'])
     ->name('projects.show');
 
 Route::middleware(['auth:sanctum', 'verified'])
-    ->post('/dashboard/projects/{project}/edit', [ProjectController::class,'edit'])
+    ->get('/dashboard/projects/{project}/edit', [ProjectController::class,'edit'])
     ->name('projects.edit');
+
+Route::middleware(['auth:sanctum', 'verified'])
+    ->put('/dashboard/projects/{project}', [ProjectController::class,'update'])
+    ->name('projects.update');

@@ -6,6 +6,7 @@ use App\Http\Requests\Projects\StoreRequest;
 use App\Models\Project;
 use App\Models\Status;
 use Illuminate\Http\Request;
+use App\Http\Requests\Projects\UpdateRequest;
 
 class ProjectController extends Controller
 {
@@ -52,8 +53,20 @@ class ProjectController extends Controller
     {
         $statuses = Status::get();
 
-        return view('projects.create')
+        return view('projects.edit')
             ->with('project',$project)
             ->with('statuses',$statuses);
+    }
+
+    public function update(UpdateRequest $request, Project $project)
+    {
+        $project->project = $request->get('name');
+        $project->status_id = $request->get('status');
+        $project->active = $request->get('active');
+
+        $project->save();
+
+        session()->flash('success', 'Updated project successfully.');
+        return redirect()->route('projects.list');
     }
 }
