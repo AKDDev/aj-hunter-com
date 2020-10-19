@@ -47,4 +47,13 @@ class ProjectController extends Controller
         return view('projects.show')
             ->with('project',$project->load(['status']));
     }
+
+    public function edit(Project $project)
+    {
+        $statuses = Status::get();
+
+        return view('projects.create')
+            ->with('project',$project)
+            ->with('statuses',$statuses);
+    }
 }
