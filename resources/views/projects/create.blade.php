@@ -7,12 +7,12 @@
 
     <form method="post" action="{{ route('projects.store') }}">
         <div>
-            <label for="project">Project Name</label>
-            <input type="text" id="project"/>
+            <label for="name">Project Name</label>
+            <input type="text" id="name"/>
         </div>
         <div>
-            <label for="status_id">Status</label>
-            <select id="status_id">
+            <label for="status">Status</label>
+            <select id="status">
                 @foreach($statuses as $status)
                     <option value="{{ $status->id }}">{{ $status->status }}</option>
                 @endforeach
