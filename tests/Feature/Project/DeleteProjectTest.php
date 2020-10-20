@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Project;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -104,7 +104,7 @@ class DeleteProjectTest extends TestCase
         $project = Project::find($id);
         $this->assertEmpty($project);
 
-        $project = Project::findWithTrashed($id);
-        $this->assertNotEmpty($project->first()->deleted_at);
+        $project = Project::withTrashed()->find($id);
+        $this->assertNotEmpty($project->deleted_at);
     }
 }

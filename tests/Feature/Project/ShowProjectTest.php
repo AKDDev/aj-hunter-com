@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Project;
 
 use App\Models\Project;
 use App\Models\Status;
