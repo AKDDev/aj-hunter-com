@@ -3,6 +3,9 @@
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             Statuses
         </h2>
+        <div class="">
+            <a href="{{route('statuses.create')}}">New</a>
+        </div>
     </x-slot>
     @if($statuses->count() == 0)
         <x-message :message="$message"></x-message>
@@ -14,10 +17,12 @@
             </thead>
             <tbody>
                 @foreach($statuses as $status)
-                    <td>{{ $status->status }}</td>
-                    <td>
+                    <tr>
+                        <td>{{ $status->status }}</td>
+                        <td>
 
-                    </td>
+                        </td>
+                    </tr>
                 @endforeach
             </tbody>
         </table>

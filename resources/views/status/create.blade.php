@@ -6,10 +6,22 @@
     </x-slot>
 
     <form method="post" action="{{ route('statuses.store') }}">
+        @csrf
         <div>
-            <label for="name">Status Name</label>
-            <input type="text" id="status"/>
+            <label for="status">Status Name</label>
+            <input type="text" id="status" name="status"/>
         </div>
+
+        @if ($errors->any())
+            <div class="">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
         <button type="submit">
             Create Status
         </button>

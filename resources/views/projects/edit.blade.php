@@ -7,6 +7,7 @@
 
     <form method="post" action="{{ route('projects.update',['project' => $project->id]) }}">
         {{ method_field('put') }}
+        @csrf
         <input type="hidden" id="id" value="{{ $project->id}}"/>
         <div>
             <label for="name">Project Name</label>
@@ -24,6 +25,17 @@
             <label for="active">Active</label>
             <input type="checkbox" value="true" id="active"{{ $project->active?'checked':''}}/>
         </div>
+
+        @if ($errors->any())
+            <div class="">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
         <button type="submit">
             Create Project
         </button>
