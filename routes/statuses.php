@@ -16,8 +16,8 @@ Route::middleware(['auth:sanctum', 'verified'])
     ->post('/dashboard/statuses', [StatusController::class,'store'])
     ->name('statuses.store');
 
-Route::get('/statuses/{status}', [StatusController::class,'show'])
-    ->name('statuses.show');
+//Route::get('/statuses/{status}', [StatusController::class,'show'])
+    //->name('statuses.show');
 
 Route::middleware(['auth:sanctum', 'verified'])
     ->get('/dashboard/statuses/{status}/edit', [StatusController::class,'edit'])
