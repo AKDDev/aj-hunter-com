@@ -39,13 +39,13 @@ class StatusController extends Controller
 
     public function show(Status $status)
     {
-        return view('statuses.show')
+        return view('status.show')
             ->with('status',$status);
     }
 
     public function edit(Status $status)
     {
-        return view('statuses.edit')
+        return view('status.edit')
             ->with('status',$status);
     }
 
