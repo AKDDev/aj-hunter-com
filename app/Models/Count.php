@@ -9,5 +9,4 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Count extends Model
 {
     use HasFactory;
-    use SoftDeletes;
 }
