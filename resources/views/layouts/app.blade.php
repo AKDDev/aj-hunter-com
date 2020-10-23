@@ -28,17 +28,10 @@
         <div class="min-h-screen bg-gray-100">
             @livewire('navigation-dropdown')
 
-            <!-- Page Heading -->
-            <header class="bg-white shadow">
-                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                    {{ $header }}
-                </div>
-            </header>
-
             <x-flash-messages></x-flash-messages>
 
             <!-- Page Content -->
-            <main>
+            <main class="mt-3">
                 {{ $slot }}
             </main>
         </div>

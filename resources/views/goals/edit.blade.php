@@ -1,10 +1,9 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Edit Goal
-        </h2>
-    </x-slot>
-
+    
+    <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        Edit Goal
+    </h2>
+   
     <form method="post" action="{{ route('goals.update',['goal' => $goal->id]) }}">
         {{ method_field('put') }}
         @csrf
@@ -40,4 +39,6 @@
             Create Goal
         </button>
     </form>
+           
+    </div>
 </x-app-layout>

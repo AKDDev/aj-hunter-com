@@ -1,12 +1,11 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Statuses
-        </h2>
-        <div class="">
-            <a href="{{route('statuses.create')}}">New</a>
-        </div>
-    </x-slot>
+    <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        Statuses
+    </h2>
+    <div class="">
+        <a href="{{route('statuses.create')}}">New</a>
+    </div>
+  
     @if($statuses->count() == 0)
         <x-message :message="$message"></x-message>
     @else
@@ -26,5 +25,5 @@
                 @endforeach
             </tbody>
         </table>
-        @endif
+    @endif
 </x-app-layout>

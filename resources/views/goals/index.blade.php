@@ -1,36 +1,37 @@
 <x-app-layout>
-    <x-slot name="header">
+    <div>
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             Goals
         </h2>
         <div class="">
             <a href="{{ route('goals.create') }}">New</a>
         </div>
-    </x-slot>
-    @if($goals->count() == 0)
-        <x-message :message="$message"></x-message>
-    @else
-        <table>
-            <thead>
-                <tr>
-                    <th>Goal</th>
-                    <th>A</th>
-                    <th>Status</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($goals as $goal)
+    
+        @if($goals->count() == 0)
+            <x-message :message="$message"></x-message>
+        @else
+            <table>
+                <thead>
                     <tr>
-                        <td>{{ $goal->goal }}</td>
-                        <td>{{ $goal->active }}</td>
-                        <td>{{ $goal->status->status }}</td>
-                        <td>
-
-                        </td>
+                        <th>Goal</th>
+                        <th>A</th>
+                        <th>Status</th>
+                        <th>Actions</th>
                     </tr>
-                @endforeach
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @foreach($goals as $goal)
+                        <tr>
+                            <td>{{ $goal->goal }}</td>
+                            <td>{{ $goal->active }}</td>
+                            <td>{{ $goal->status->status }}</td>
+                            <td>
+
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
         @endif
+    </div>
 </x-app-layout>
