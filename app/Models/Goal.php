@@ -12,4 +12,16 @@ class Goal extends Model
     use SoftDeletes;
 
     public $fillable = ['goal','project_id','status_id','total','type_id','start','end'];
+
+    public function status() {
+        return $this->belongsTo(Status::class);
+    }
+
+    public function project() {
+        return $this->belongsTo(Project::class);
+    }
+
+    public function type() {
+        return $this->belongsTo(Type::class);
+    }
 }
