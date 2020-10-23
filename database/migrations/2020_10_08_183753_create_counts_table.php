@@ -19,7 +19,6 @@ class CreateCountsTable extends Migration
             $table->foreignId('goal_id')->constrained();;
 
             $table->integer('value');
-            $table->foreignId('type_id')->constrained();;
             $table->dateTime('when');
             $table->text('comment')->nullable();
 

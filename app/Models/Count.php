@@ -9,4 +9,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Count extends Model
 {
     use HasFactory;
+
+    public $fillable = ['goal_id','value','when','comment'];
+
+    public function goal()
+    {
+        return $this->belongsTo(Goal::class);
+    }
 }

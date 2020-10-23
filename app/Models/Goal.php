@@ -24,4 +24,14 @@ class Goal extends Model
     public function type() {
         return $this->belongsTo(Type::class);
     }
+
+    public function scopeActive($query)
+    {
+        $today = now()->toDateString();
+        return $query->where('start','<=',$today)
+            ->where(function($query) use ($today) {
+                $query->whereIsNull('end')
+                    ->orWhere('end','>=',$today);
+            });
+    }
 }
