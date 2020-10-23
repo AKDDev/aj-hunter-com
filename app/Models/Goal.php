@@ -10,4 +10,6 @@ class Goal extends Model
 {
     use HasFactory;
     use SoftDeletes;
+
+    public $fillable = ['goal','project_id','status_id','total','type_id','start','end'];
 }

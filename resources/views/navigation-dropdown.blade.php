@@ -4,7 +4,7 @@
         <div class="flex justify-between h-16">
             <div class="flex">
                 <!-- Logo -->
-                <div claartisanss="flex-shrink-0 flex items-center">
+                <div class="flex-shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}">
                         <x-jet-application-mark class="block h-9 w-auto" />
                     </a>
@@ -22,6 +22,10 @@
 
                     <x-jet-nav-link href="{{ route('statuses.list') }}" :active="request()->routeIs('statuses.list')">
                         {{ __('Statuses') }}
+                    </x-jet-nav-link>
+
+                    <x-jet-nav-link href="{{ route('types.list') }}" :active="request()->routeIs('statuses.list')">
+                        {{ __('Types') }}
                     </x-jet-nav-link>
 
                 </div>

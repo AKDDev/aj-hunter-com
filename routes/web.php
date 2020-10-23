@@ -26,3 +26,5 @@ Route::middleware(['auth:sanctum', 'verified'])
 Route::group([],base_path('routes/projects.php'));
 Route::group([],base_path('routes/statuses.php'));
 Route::group([],base_path('routes/types.php'));
+Route::group([],base_path('routes/goals.php'));
+Route::group([],base_path('routes/count.php'));

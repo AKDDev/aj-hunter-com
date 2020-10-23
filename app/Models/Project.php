@@ -17,4 +17,8 @@ class Project extends Model
     {
         return $this->belongsTo(Status::class);
     }
+
+    public function scopeActive($query) {
+        return $query->where('active','=',1);
+    }
 }
