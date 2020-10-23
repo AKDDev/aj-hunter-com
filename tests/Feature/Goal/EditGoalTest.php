@@ -15,7 +15,7 @@ class EditGoalTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function startup()
+    protected function startup()
     {
         Status::create(['status' => 'Change To']);
         $status = Status::create(['status' => 'Test']);
@@ -36,8 +36,6 @@ class EditGoalTest extends TestCase
             'start' => '2020-11-01',
             'end' => '2020-11-30',
         ]);
-
-
 
         return $goal;
     }
@@ -70,8 +68,8 @@ class EditGoalTest extends TestCase
         $response->assertSee('<form method="post" action="'.route('goals.update',['goal' => $id]).'">',false);
         $response->assertSee('<input type="hidden" name="_method" value="put">',false);
         $response->assertViewHas('statuses');
-        $response->assertSee('<option value="1">Test</option>', false);
-        $response->assertSee('<option value="2">Change To</option>', false);
+        $response->assertViewHas('projects');
+        $response->assertViewHas('types');
     }
 
     /**
@@ -84,9 +82,13 @@ class EditGoalTest extends TestCase
 
         $data = [
             'id' => '',
-            'name' => '',
-            'active' => '',
-            'status' => '',
+            'goal' => '',
+            'project_id' => '',
+            'status_id' => '',
+            'total' => '',
+            'type_id' => '',
+            'start' => '',
+            'end' => '',
         ];
 
         $response = $this->actingAs($user)
@@ -100,65 +102,41 @@ class EditGoalTest extends TestCase
         $errors = session('errors');
 
         $this->assertEquals('The id field is required.', ($errors->get('id'))[0]);
-        $this->assertEquals('The name field is required.', ($errors->get('name'))[0]);
-        $this->assertEquals('The active field is required.', ($errors->get('active'))[0]);
-        $this->assertEquals('The status field is required.', ($errors->get('status'))[0]);
+        $this->assertEquals('The status id field is required.', ($errors->get('status_id'))[0]);
+        $this->assertEquals('The project id field is required.', ($errors->get('project_id'))[0]);
+        $this->assertEquals('The type id field is required.', ($errors->get('type_id'))[0]);
+        $this->assertEquals('The total field is required.', ($errors->get('total'))[0]);
+        $this->assertEquals('The start field is required.', ($errors->get('start'))[0]);
+        $response->assertSessionDoesntHaveErrors(['end']);
     }
 
     /**
      * @test
      */
-    public function required_active_field_must_be_boolean()
+    public function required_status_id_field_must_be_existing_status_integer()
     {
         $user = User::factory()->create();
         $goal = $this->startup();
-        $s = Status::first();
-        $active = ['abc', 3];
 
-        foreach($active as $a) {
-            $data = [
-                'id'=> $goal->id,
-                'name' => 'Goal 1',
-                'active' => $a,
-                'status' => $s->id,
-            ];
-
-            $response = $this->actingAs($user)
-            ->put(route('goals.update',['goal' => $goal->id]), $data);
-
-            $response->assertStatus(302);
-            $response->assertRedirect();
-            $response->assertSessionHasErrors();
-
-            $errors = session('errors');
-
-            $response->assertSessionDoesntHaveErrors(['status', 'name','id']);
-            $this->assertEquals('The active field must be true or false.', ($errors->get('active'))[0]);
-        }
-    }
-
-    /**
-     * @test
-     */
-    public function required_status_field_must_be_existing_status_integer()
-    {
-        $user = User::factory()->create();
-        $goal = $this->startup();
         $status = [
-            'abc' => 'The status must be an integer.',
-            3 => 'The selected status is invalid.',
+            'abc' => 'The status id must be an integer.',
+            3 => 'The selected status id is invalid.',
         ];
 
         foreach($status as $a => $error) {
             $data = [
                 'id' => $goal->id,
-                'name' => 'Goal 1',
-                'active' => 1,
-                'status' => $a,
+                'goal' => 'Goal 1',
+                'status_id' => $a,
+                'project_id' => Project::first()->id,
+                'total' => 50000,
+                'type_id' => Type::first()->id,
+                'start' => '2020-11-01',
+                'end' => '2020-11-30',
             ];
 
             $response = $this->actingAs($user)
-            ->put(route('goals.update',['goal' => $goal->id]), $data);
+                ->put(route('goals.update',['goal' => $goal->id]), $data);
 
             $response->assertStatus(302);
             $response->assertRedirect();
@@ -166,10 +144,168 @@ class EditGoalTest extends TestCase
 
             $errors = session('errors');
 
-            $response->assertSessionDoesntHaveErrors(['active', 'name','id']);
-            $this->assertEquals($error, ($errors->get('status'))[0]);
+            $response->assertSessionDoesntHaveErrors(['goal','project_id','total','type_id','start','end']);
+            $this->assertEquals($error, ($errors->get('status_id'))[0]);
         }
     }
+
+    /**
+     * @test
+     */
+    public function required_project_id_field_must_be_existing_project_integer()
+    {
+        $user = User::factory()->create();
+        $goal = $this->startup();
+
+        $project = [
+            'abc' => 'The project id must be an integer.',
+            3 => 'The selected project id is invalid.',
+        ];
+
+        foreach($project as $a => $error) {
+            $data = [
+                'id' => $goal->id,
+                'goal' => 'Goal 1',
+                'status_id' => Status::first()->id,
+                'project_id' => $a,
+                'total' => 50000,
+                'type_id' => Type::first()->id,
+                'start' => '2020-11-01',
+                'end' => '2020-11-30',
+            ];
+
+            $response = $this->actingAs($user)
+                ->put(route('goals.update',['goal' => $goal->id]), $data);
+
+            $response->assertStatus(302);
+            $response->assertRedirect();
+            $response->assertSessionHasErrors();
+
+            $errors = session('errors');
+
+            $response->assertSessionDoesntHaveErrors(['goal','status_id','total','type_id','start','end']);
+            $this->assertEquals($error, ($errors->get('project_id'))[0]);
+        }
+    }
+
+    /**
+     * @test
+     */
+    public function required_type_id_field_must_be_existing_type_integer()
+    {
+        $user = User::factory()->create();
+        $goal = $this->startup();
+
+        $type = [
+            'abc' => 'The type id must be an integer.',
+            3 => 'The selected type id is invalid.',
+        ];
+
+        foreach($type as $a => $error) {
+            $data = [
+                'id' => $goal->id,
+                'goal' => 'Goal 1',
+                'status_id' => Status::first()->id,
+                'project_id' => Project::first()->id,
+                'total' => 50000,
+                'type_id' => $a,
+                'start' => '2020-11-01',
+                'end' => '2020-11-30',
+            ];
+
+            $response = $this->actingAs($user)
+                ->put(route('goals.update',['goal' => $goal->id]), $data);
+
+            $response->assertStatus(302);
+            $response->assertRedirect();
+            $response->assertSessionHasErrors();
+
+            $errors = session('errors');
+
+            $response->assertSessionDoesntHaveErrors(['goal','status_id','total','project_id','start','end']);
+            $this->assertEquals($error, ($errors->get('type_id'))[0]);
+        }
+    }
+
+    /**
+     * @test
+     */
+    public function required_start_field_must_be_a_date()
+    {
+        $user = User::factory()->create();
+        $goal = $this->startup();
+
+        $type = [
+            'abc' => 'The start is not a valid date.',
+            3 => 'The start is not a valid date.',
+        ];
+
+        foreach($type as $a => $error) {
+            $data = [
+                'id' => $goal->id,
+                'goal' => 'Goal 1',
+                'status_id' => Status::first()->id,
+                'project_id' => Project::first()->id,
+                'total' => 50000,
+                'type_id' => Type::first()->id,
+                'start' => $a,
+                'end' => '2020-11-30',
+            ];
+
+            $response = $this->actingAs($user)
+                ->put(route('goals.update',['goal' => $goal->id]), $data);
+
+            $response->assertStatus(302);
+            $response->assertRedirect();
+            $response->assertSessionHasErrors();
+
+            $errors = session('errors');
+
+            $response->assertSessionDoesntHaveErrors(['goal','status_id','total','project_id','type_id','end']);
+            $this->assertEquals($error, ($errors->get('start'))[0]);
+        }
+    }
+
+    /**
+     * @test
+     */
+    public function end_field_must_be_a_date_after_start()
+    {
+        $user = User::factory()->create();
+        $goal = $this->startup();
+
+        $type = [
+            'abc' => 'The end is not a valid date.',
+            3 => 'The end is not a valid date.',
+            '2020-10-01' => 'The end must be a date after start.',
+        ];
+
+        foreach($type as $a => $error) {
+            $data = [
+                'id' => $goal->id,
+                'goal' => 'Goal 1',
+                'status_id' => Status::first()->id,
+                'project_id' => Project::first()->id,
+                'total' => 50000,
+                'type_id' => Type::first()->id,
+                'start' => '2020-11-01',
+                'end' => $a,
+            ];
+
+            $response = $this->actingAs($user)
+                ->put(route('goals.update',['goal' => $goal->id]), $data);
+
+            $response->assertStatus(302);
+            $response->assertRedirect();
+            $response->assertSessionHasErrors();
+
+            $errors = session('errors');
+
+            $response->assertSessionDoesntHaveErrors(['goal','status_id','total','project_id','type_id','start']);
+            $this->assertEquals($error, ($errors->get('end'))[0]);
+        }
+    }
+
 
     /**
      * @test
@@ -178,6 +314,7 @@ class EditGoalTest extends TestCase
     {
         $user = User::factory()->create();
         $goal = $this->startup();
+
         $ids = [
             'abc' => 'The id must be an integer.',
             3 => 'The selected id is invalid.',
@@ -186,13 +323,17 @@ class EditGoalTest extends TestCase
         foreach($ids as $a => $error) {
             $data = [
                 'id' => $a,
-                'name' => 'Goal 1',
-                'active' => $goal->active,
-                'status' => $goal->status_id,
+                'goal' => 'Goal 1',
+                'status_id' => Status::first()->id,
+                'project_id' => Project::first()->id,
+                'total' => 50000,
+                'type_id' => Type::first()->id,
+                'start' => '2020-11-01',
+                'end' => '2020-11-30',
             ];
 
             $response = $this->actingAs($user)
-            ->put(route('goals.update',['goal' => $goal->id]), $data);
+                ->put(route('goals.update',['goal' => $goal->id]), $data);
 
             $response->assertStatus(302);
             $response->assertRedirect();
@@ -200,7 +341,7 @@ class EditGoalTest extends TestCase
 
             $errors = session('errors');
 
-            $response->assertSessionDoesntHaveErrors(['active', 'name','status']);
+            $response->assertSessionDoesntHaveErrors(['goal','status_id','total','project_id','type_id','start','end']);
             $this->assertEquals($error, ($errors->get('id'))[0]);
         }
     }
@@ -214,11 +355,15 @@ class EditGoalTest extends TestCase
         $goal = $this->startup();
 
         $data = [
-                'id' => $goal->id,
-                'name' => $goal->goal,
-                'active' => $goal->active,
-                'status' => $goal->status_id,
-            ];
+            'id' => $goal->id,
+            'goal' => 'Goal 1',
+            'status_id' => Status::first()->id,
+            'project_id' => Project::first()->id,
+            'total' => 50000,
+            'type_id' => Type::first()->id,
+            'start' => '2020-11-01',
+            'end' => '2020-11-30',
+        ];
 
         $response = $this->actingAs($user)
             ->put(route('goals.update',['goal' => $goal->id]), $data);
@@ -234,13 +379,16 @@ class EditGoalTest extends TestCase
     {
         $user = User::factory()->create();
         $goal = $this->startup();
-        $status = Status::orderBy('id','asc')->first();
 
         $data = [
             'id' => $goal->id,
-            'name' => 'Changed Goal',
-            'active' => 0,
-            'status' => $status->id,
+            'goal' => 'Goal 2',
+            'status_id' => Status::first()->id,
+            'project_id' => Project::first()->id,
+            'total' => 50000,
+            'type_id' => Type::first()->id,
+            'start' => '2020-11-01',
+            'end' => '2020-11-30',
         ];
 
         $response = $this->actingAs($user)
@@ -252,12 +400,9 @@ class EditGoalTest extends TestCase
         $changed = Goal::find($goal->id);
 
         $this->assertNotEquals($goal->goal, $changed->goal);
-        $this->assertNotEquals($goal->active, $changed->active);
-        $this->assertNotEquals($goal->status_id, $changed->status_id);
 
-        $this->assertEquals($data['name'],$changed->goal);
-        $this->assertEquals($data['status'],$changed->status_id);
-        $this->assertEquals($data['active'],$changed->active);
+        $this->assertEquals($data['goal'],$changed->goal);
+
 
     }
 

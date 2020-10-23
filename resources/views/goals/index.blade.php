@@ -1,30 +1,30 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Projects
+            Goals
         </h2>
         <div class="">
-            <a href="{{ route('projects.create') }}">New</a>
+            <a href="{{ route('goals.create') }}">New</a>
         </div>
     </x-slot>
-    @if($projects->count() == 0)
+    @if($goals->count() == 0)
         <x-message :message="$message"></x-message>
     @else
         <table>
             <thead>
                 <tr>
-                    <th>Project</th>
+                    <th>Goal</th>
                     <th>A</th>
                     <th>Status</th>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach($projects as $project)
+                @foreach($goals as $goal)
                     <tr>
-                        <td>{{ $project->project }}</td>
-                        <td>{{ $project->active }}</td>
-                        <td>{{ $project->status->status }}</td>
+                        <td>{{ $goal->goal }}</td>
+                        <td>{{ $goal->active }}</td>
+                        <td>{{ $goal->status->status }}</td>
                         <td>
 
                         </td>

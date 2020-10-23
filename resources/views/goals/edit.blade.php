@@ -1,29 +1,29 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Edit Project
+            Edit Goal
         </h2>
     </x-slot>
 
-    <form method="post" action="{{ route('projects.update',['project' => $project->id]) }}">
+    <form method="post" action="{{ route('goals.update',['goal' => $goal->id]) }}">
         {{ method_field('put') }}
         @csrf
-        <input type="hidden" id="id" value="{{ $project->id}}"/>
+        <input type="hidden" id="id" value="{{ $goal->id}}"/>
         <div>
-            <label for="name">Project Name</label>
-            <input type="text" id="name" value="{{ $project->project }}"/>
+            <label for="name">Goal Name</label>
+            <input type="text" id="name" value="{{ $goal->goal }}"/>
         </div>
         <div>
             <label for="status">Status</label>
             <select id="status">
                 @foreach($statuses as $status)
-                    <option value="{{ $status->id }}"{{ $project->status_id === $status->id?'selected':'' }}>{{ $status->status }}</option>
+                    <option value="{{ $status->id }}"{{ $goal->status_id === $status->id?'selected':'' }}>{{ $status->status }}</option>
                 @endforeach
             </select>
         </div>
         <div>
             <label for="active">Active</label>
-            <input type="checkbox" value="true" id="active"{{ $project->active?'checked':''}}/>
+            <input type="checkbox" value="true" id="active"{{ $goal->active?'checked':''}}/>
         </div>
 
         @if ($errors->any())
@@ -37,7 +37,7 @@
         @endif
 
         <button type="submit">
-            Create Project
+            Create Goal
         </button>
     </form>
 </x-app-layout>

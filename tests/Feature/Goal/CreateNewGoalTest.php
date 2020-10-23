@@ -249,7 +249,7 @@ class CreateNewGoalTest extends TestCase
     /**
      * @test
      */
-    public function required_end_field_must_be_a_date_after_start()
+    public function end_field_must_be_a_date_after_start()
     {
         $user = User::factory()->create();
         $this->startup();

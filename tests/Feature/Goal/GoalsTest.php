@@ -2,6 +2,8 @@
 
 namespace Tests\Feature\Goal;
 
+use App\Models\Project;
+use App\Models\Type;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -13,9 +15,27 @@ class GoalsTest extends TestCase
 {
     use RefreshDatabase;
 
-    protected function startup()
+    public function startup()
     {
-        $status = Status::create(['status' => 'test']);
+        $status = Status::create(['status' => 'Test']);
+        $project = Project::create([
+            'project' => 'Project 1',
+            'status_id' => $status->id,
+            'active' => 1,
+        ]);
+        $type = Type::create(['type' => 'Word']);
+
+        $goal = Goal::create([
+            'goal' => 'Goal 1',
+            'project_id' => $project->id,
+            'status_id' => $status->id,
+            'total' => 50000,
+            'type_id' => $type->id,
+            'start' => '2020-11-01',
+            'end' => '2020-11-30',
+        ]);
+
+        return $goal;
     }
 
     /**
