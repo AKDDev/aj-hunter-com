@@ -24,8 +24,12 @@
                         {{ __('Statuses') }}
                     </x-jet-nav-link>
 
-                    <x-jet-nav-link href="{{ route('types.list') }}" :active="request()->routeIs('statuses.list')">
+                    <x-jet-nav-link href="{{ route('types.list') }}" :active="request()->routeIs('types.list')">
                         {{ __('Types') }}
+                    </x-jet-nav-link>
+
+                    <x-jet-nav-link href="{{ route('goals.list') }}" :active="request()->routeIs('goals.list')">
+                        {{ __('Goals') }}
                     </x-jet-nav-link>
 
                 </div>
