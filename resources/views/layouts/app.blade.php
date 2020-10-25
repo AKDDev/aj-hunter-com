@@ -31,7 +31,7 @@
             <x-flash-messages></x-flash-messages>
 
             <!-- Page Content -->
-            <main class="mt-3">
+            <main class="p-5 ">
                 {{ $slot }}
             </main>
         </div>
