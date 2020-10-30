@@ -1,7 +1,18 @@
 <x-app-layout>
-    <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-        {{ __('Dashboard') }}
-    </h2>
-    
-    <h3>Coming Soon</h3>
+    <h1>Dashboard</h1>
+    <div class="md:flex">
+        <div class="md:flex-1">
+            <div class="">
+                Add Count Form
+            </div>
+
+            <div class="">
+                Project Lists
+            </div>
+        </div>
+
+        <div class="md:flex-1">
+            Active Goals
+        </div>
+    </div>
 </x-app-layout>

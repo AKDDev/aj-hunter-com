@@ -1,27 +1,29 @@
-<x-app-layout>
-    <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-        Add New Count
-    </h2>
-    
-    <form method="post" action="{{ route('counts.store') }}">
-        @csrf
-        <div>
-            <label for="count">Type Name</label>
-            <input type="text" id="count" name="count"/>
+<form method="post" action="{{ route('counts.store') }}">
+    @csrf
+    <div>
+        <label for="count">Amount</label>
+        <input type="number" id="count" name="count"/>
+    </div>
+    <div>
+        <label for="type_id">Type</label>
+        <select id="type_id" name="type_id">
+            @foreach($types as $type)
+                <option value="{{ $type->id }}">{{$type->type }}</option>
+            @endforeach
+        </select>
+    </div>
+
+    @if ($errors->any())
+        <div class="">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
         </div>
+    @endif
 
-        @if ($errors->any())
-            <div class="">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-
-        <button type="submit">
-            Create Type
-        </button>
-    </form>
-</x-app-layout>
+    <button type="submit">
+        Add Count
+    </button>
+</form>

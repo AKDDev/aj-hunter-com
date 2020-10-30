@@ -13,31 +13,36 @@
         <title>{{ config('app.name', 'Laravel') }}</title>
 
         <!-- Fonts -->
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
+        <!--link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap"-->
         <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Satisfy&display=swap" rel="stylesheet">
 
         <!-- Styles -->
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 
-        @livewireStyles
+        <livewire:styles />
 
         <!-- Scripts -->
         <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.7.0/dist/alpine.js" defer></script>
     </head>
     <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100">
-            @livewire('navigation-dropdown')
+        <div class="min-h-screen bg-gray-100 flex flex-col min-h-screen ">
+            <livewire:navigation-dropdown/>
 
             <x-flash-messages></x-flash-messages>
 
             <!-- Page Content -->
-            <main class="p-5 ">
+            <main class="p-5 flex-grow">
                 {{ $slot }}
             </main>
+
+            <footer class="text-sm p-2">
+                Copyright &copy; 2011 - {{ date('Y') }} All Rights Reserved - AJ Hunter |
+                Site Created by <a href="http://akddev.net">AKD Development</a>
+            </footer>
         </div>
 
         @stack('modals')
 
-        @livewireScripts
+        <livewire:scripts />
     </body>
 </html>
