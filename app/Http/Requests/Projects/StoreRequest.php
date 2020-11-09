@@ -26,7 +26,7 @@ class StoreRequest extends FormRequest
         return [
             'name' => 'required|string',
             'status' => 'required|integer|exists:statuses,id',
-            'active' => 'required|boolean'
+            'active' => 'nullable|boolean'
         ];
     }
 }
