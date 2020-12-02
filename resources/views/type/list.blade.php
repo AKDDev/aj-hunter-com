@@ -1,30 +1,39 @@
 <x-app-layout>
-  
-    <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-        Types
-    </h2>
-    <div class="">
-        <a href="{{route('types.create')}}">New</a>
-    </div>
-  
-    @if($types->count() == 0)
-        <x-message :message="$message"></x-message>
-    @else
-        <table>
-            <thead>
+    <x-page>
+        <h2>
+            Types
+        </h2>
+        <div class="">
+            <x-button-link href="{{route('types.create')}}">New</x-button-link>
+        </div>
+
+        @if($types->count() == 0)
+            <x-message :message="$message"></x-message>
+        @else
+            <table class="w-full">
+                <thead>
                 <th>Type</th>
                 <th>Actions</th>
-            </thead>
-            <tbody>
+                </thead>
+                <tbody>
                 @foreach($types as $type)
                     <tr>
                         <td>{{ $type->type }}</td>
                         <td>
-
+                            <x-action.button>
+                                <x-action.action href="{{ route('types.edit',['type' => $type->id]) }}">Edit</x-action.action>
+                                <x-action.action
+                                    href="{{ route('types.delete',['type' => $type->id]) }}"
+                                    action="delete"
+                                >
+                                    Delete
+                                </x-action.action>
+                            </x-action.button>
                         </td>
                     </tr>
                 @endforeach
-            </tbody>
-        </table>
+                </tbody>
+            </table>
         @endif
+    </x-page>
 </x-app-layout>

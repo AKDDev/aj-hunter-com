@@ -24,7 +24,6 @@ class DeleteRequest extends FormRequest
     public function rules()
     {
         return [
-            'id' => 'required|integer|exists:types,id',
         ];
     }
 }

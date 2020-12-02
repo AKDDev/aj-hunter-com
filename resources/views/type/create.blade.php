@@ -1,27 +1,14 @@
 <x-app-layout>
-    <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-        Add New Type
-    </h2>
-    
-    <form method="post" action="{{ route('types.store') }}">
-        @csrf
-        <div>
-            <label for="type">Type Name</label>
-            <input type="text" id="type" name="type"/>
-        </div>
+    <x-page>
+        <h2>
+            Add New Type
+        </h2>
 
-        @if ($errors->any())
-            <div class="">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-
-        <button type="submit">
-            Create Type
-        </button>
-    </form>
+        <form method="post" action="{{ route('types.store') }}">
+            @csrf
+            <x-form.input name="type" type="text" :value="old('type')">Type Name</x-form.input>
+            <x-form.errors :errors="$errors"></x-form.errors>
+            <x-button type="submit">Create Type</x-button>
+        </form>
+    </x-page>
 </x-app-layout>

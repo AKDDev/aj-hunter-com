@@ -1,37 +1,52 @@
 <x-app-layout>
-    <div>
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+    <x-page>
+        <h2>
             Goals
         </h2>
-        <div class="">
-            <a href="{{ route('goals.create') }}">New</a>
+        <div class="my-3">
+            <x-button-link href="{{ route('goals.create') }}">New</x-button-link>
         </div>
-    
+
         @if($goals->count() == 0)
             <x-message :message="$message"></x-message>
         @else
-            <table>
+            <table class="w-full">
                 <thead>
                     <tr>
+                        <th>Project</th>
                         <th>Goal</th>
-                        <th>A</th>
+                        <th>Start - End</th>
                         <th>Status</th>
+                        <th>Goal</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach($goals as $goal)
                         <tr>
+                            <td>{{ $goal->project->project }}</td>
                             <td>{{ $goal->goal }}</td>
-                            <td>{{ $goal->active }}</td>
-                            <td>{{ $goal->status->status }}</td>
                             <td>
-
+                                {{ $goal->start }} to <br/>
+                                {{ $goal->end?$goal->end:'Never' }}
+                            </td>
+                            <td>{{ $goal->status->status }}</td>
+                            <td>{{ $goal->total }} {{ $goal->type->type }}</td>
+                            <td>
+                                <x-action.button>
+                                    <x-action.action href="{{ route('goals.edit',['goal' => $goal->id]) }}">Edit</x-action.action>
+                                    <x-action.action
+                                        href="{{ route('goals.delete',['goal' => $goal->id]) }}"
+                                        action="delete"
+                                    >
+                                        Delete
+                                    </x-action.action>
+                                </x-action.button>
                             </td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
         @endif
-    </div>
+    </x-page>
 </x-app-layout>

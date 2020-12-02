@@ -55,7 +55,7 @@ class DeleteStatusTest extends TestCase
 
             $errors = session('errors');
 
-            $this->assertEquals($error, ($errors->get('id'))[0]);
+            $this->assertEquals($error, ($errors->get('status'))[0]);
         }
     }
 

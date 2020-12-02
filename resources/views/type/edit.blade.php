@@ -1,30 +1,17 @@
 <x-app-layout>
-    <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-        Edit Type
-    </h2>
-    
-
-    <form method="post" action="{{ route('types.update',['type' => $type->id]) }}">
-        {{ method_field('put') }}
-        <input type="hidden" id="id" name="id" value="{{ $type->id }}"/>
-        @csrf
-        <div>
-            <label for="type">Type Name</label>
-            <input type="text" id="type" name="type" value="{{ $type->type }}"/>
-        </div>
-
-        @if ($errors->any())
-            <div class="">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-
-        <button type="submit">
+    <x-page>
+        <h2>
             Edit Type
-        </button>
-    </form>
+        </h2>
+
+
+        <form method="post" action="{{ route('types.update',['type' => $type->id]) }}">
+            {{ method_field('put') }}
+            <input type="hidden" id="id" name="id" value="{{ $type->id }}"/>
+            @csrf
+            <x-form.input name="type" type="text" :value="old('type', $type->type)">Type Name</x-form.input>
+            <x-form.errors :errors="$errors"></x-form.errors>
+            <x-button type="submit">Create Type</x-button>
+        </form>
+    </x-page>
 </x-app-layout>

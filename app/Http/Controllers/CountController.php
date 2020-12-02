@@ -6,6 +6,7 @@ use App\Http\Requests\Count\DeleteRequest;
 use App\Http\Requests\Count\StoreRequest;
 use App\Models\Count;
 use App\Models\Goal;
+use App\Models\Type;
 use Illuminate\Http\Request;
 
 class CountController extends Controller
@@ -13,8 +14,10 @@ class CountController extends Controller
     public function create()
     {
         $goals = Goal::active()->get();
+        $types = Type::get();
 
         return view('count.create')
+            ->with('types', $types)
             ->with('goals',$goals);
     }
 
@@ -22,9 +25,11 @@ class CountController extends Controller
     {
         Count::create([
             'goal_id' => $request->get('goal_id'),
+            'type_id' => $request->get('type_id'),
             'value' => $request->get('value'),
             'when' => $request->get('when'),
             'comment' => $request->get('comment'),
+
         ]);
 
         session()->flash('success', 'Created new count successfully.');

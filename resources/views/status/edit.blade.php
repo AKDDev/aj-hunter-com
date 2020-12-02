@@ -1,30 +1,17 @@
 <x-app-layout>
-    <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-        Edit Status
-    </h2>
-    
-
-    <form method="post" action="{{ route('statuses.update',['status' => $status->id]) }}">
-        {{ method_field('put') }}
-        <input type="hidden" id="id" name="id" value="{{ $status->id }}"/>
-        @csrf
-        <div>
-            <label for="status">Status Name</label>
-            <input type="text" id="status" name="status" value="{{ $status->status }}"/>
-        </div>
-
-        @if ($errors->any())
-            <div class="">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-
-        <button type="submit">
+    <x-page>
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             Edit Status
-        </button>
-    </form>
+        </h2>
+
+
+        <form method="post" action="{{ route('statuses.update',['status' => $status->id]) }}">
+            @csrf
+            @method('put')
+            <input type="hidden" id="id" name="id" value="{{ $status->id }}"/>
+            <x-form.input name="status" type="text" :value="old('status', $status->status)">Status Name</x-form.input>
+            <x-form.errors :errors="$errors"></x-form.errors>
+            <x-button type="submit">Edit Status</x-button>
+        </form>
+    </x-page>
 </x-app-layout>

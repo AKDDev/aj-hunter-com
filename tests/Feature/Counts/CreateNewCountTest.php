@@ -59,7 +59,7 @@ class CreateNewCountTest extends TestCase
             ->get('/dashboard/counts/create');
 
         $response->assertStatus(200);
-        $response->assertSee('Add New Count');
+        $response->assertSee('Add Count');
         $response->assertSee('<form method="post" action="'.route('counts.store').'">',false);
     }
 

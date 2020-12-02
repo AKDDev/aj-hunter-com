@@ -56,6 +56,8 @@ class DeleteProjectTest extends TestCase
             $response = $this->actingAs($user)
             ->delete(route('projects.delete',['project' => $project->id]), $data);
 
+            $errors = session('errors');
+
             $response->assertStatus(302);
             $response->assertRedirect();
             $response->assertSessionHasErrors();

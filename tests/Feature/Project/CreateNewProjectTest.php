@@ -41,10 +41,10 @@ class CreateNewProjectTest extends TestCase
         $response->assertSee('Add New Project');
         $response->assertSee('<form method="post" action="'.route('projects.store').'">',false);
         $response->assertViewHas('statuses');
-        $response->assertSee('<option value="1">First Draft</option>', false);
-        $response->assertSee('<option value="2">Revising</option>', false);
-        $response->assertSee('<option value="3">Published</option>', false);
-        $response->assertSee('<option value="4">Archived</option>', false);
+        $response->assertSee('First Draft', false);
+        $response->assertSee('Revising', false);
+        $response->assertSee('Published', false);
+        $response->assertSee('Archived', false);
     }
 
     /**
@@ -70,7 +70,6 @@ class CreateNewProjectTest extends TestCase
         $errors = session('errors');
 
         $this->assertEquals('The name field is required.', ($errors->get('name'))[0]);
-        $this->assertEquals('The active field is required.', ($errors->get('active'))[0]);
         $this->assertEquals('The status field is required.', ($errors->get('status'))[0]);
     }
 

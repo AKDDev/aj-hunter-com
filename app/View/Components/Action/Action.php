@@ -7,9 +7,12 @@ use Illuminate\View\Component;
 class Action extends Component
 {
     public $action;
-    public function __construct($action = 'get')
+    public $id;
+
+    public function __construct($action = 'get', $id = null)
     {
         $this->action = $action;
+        $this->id = $id;
     }
 
     /**

@@ -25,12 +25,16 @@ class Goal extends Model
         return $this->belongsTo(Type::class);
     }
 
+    public function count() {
+        return $this->hasMany(Count::class);
+    }
+
     public function scopeActive($query)
     {
         $today = now()->toDateString();
         return $query->where('start','<=',$today)
             ->where(function($query) use ($today) {
-                $query->whereIsNull('end')
+                $query->whereNull('end')
                     ->orWhere('end','>=',$today);
             });
     }

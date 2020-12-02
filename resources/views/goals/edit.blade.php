@@ -1,44 +1,22 @@
 <x-app-layout>
-    
-    <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-        Edit Goal
-    </h2>
-   
-    <form method="post" action="{{ route('goals.update',['goal' => $goal->id]) }}">
-        {{ method_field('put') }}
-        @csrf
-        <input type="hidden" id="id" value="{{ $goal->id}}"/>
-        <div>
-            <label for="name">Goal Name</label>
-            <input type="text" id="name" value="{{ $goal->goal }}"/>
-        </div>
-        <div>
-            <label for="status">Status</label>
-            <select id="status">
-                @foreach($statuses as $status)
-                    <option value="{{ $status->id }}"{{ $goal->status_id === $status->id?'selected':'' }}>{{ $status->status }}</option>
-                @endforeach
-            </select>
-        </div>
-        <div>
-            <label for="active">Active</label>
-            <input type="checkbox" value="true" id="active"{{ $goal->active?'checked':''}}/>
-        </div>
+    <x-page>
+        <h2>
+            Add New Goal
+        </h2>
 
-        @if ($errors->any())
-            <div class="">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-
-        <button type="submit">
-            Create Goal
-        </button>
-    </form>
-           
-    </div>
+        <form method="post" action="{{ route('goals.update',['goal' => $goal->id]) }}">
+            @csrf
+            @method('put')
+            <input type="hidden" name="id" value="{{ $goal->id }}"/>
+            <x-form.select name="project_id" :selected="old('project_id',$goal->project_id)" :options="$projects->pluck('project','id')">Project</x-form.select>
+            <x-form.input name="goal" type="text" :value="old('goal', $goal->goal)">Goal Name</x-form.input>
+            <x-form.select name="status_id" :selected="old('status_id', $goal->status_id)" :options="$statuses->pluck('status','id')">Status</x-form.select>
+            <x-form.input name="total" type="number" :value="old('total',$goal->total)">Total</x-form.input>
+            <x-form.select name="type_id" :selected="old('type_id', $goal->type_id)" :options="$types->pluck('type','id')">Type</x-form.select>
+            <x-form.input name="start" type="date" :value="old('start', $goal->start)">Start</x-form.input>
+            <x-form.input name="end" type="date" :value="old('end', $goal->end)">End</x-form.input>
+            <x-form.errors :errors="$errors"></x-form.errors>
+            <x-button type="submit">Edit Goal</x-button>
+        </form>
+    </x-page>
 </x-app-layout>

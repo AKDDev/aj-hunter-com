@@ -53,8 +53,8 @@ class EditProjectTest extends TestCase
         $response->assertSee('<form method="post" action="'.route('projects.update',['project' => $id]).'">',false);
         $response->assertSee('<input type="hidden" name="_method" value="put">',false);
         $response->assertViewHas('statuses');
-        $response->assertSee('<option value="1">Test</option>', false);
-        $response->assertSee('<option value="2">Change To</option>', false);
+        $response->assertSee('Test', false);
+        $response->assertSee('Change To', false);
     }
 
     /**

@@ -1,29 +1,9 @@
 <form method="post" action="{{ route('counts.store') }}">
     @csrf
-    <div>
-        <label for="count">Amount</label>
-        <input type="number" id="count" name="count"/>
-    </div>
-    <div>
-        <label for="type_id">Type</label>
-        <select id="type_id" name="type_id">
-            @foreach($types as $type)
-                <option value="{{ $type->id }}">{{$type->type }}</option>
-            @endforeach
-        </select>
-    </div>
-
-    @if ($errors->any())
-        <div class="">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-
-    <button type="submit">
-        Add Count
-    </button>
+    <x-form.select name="goal_id" :selected="old('goal_id')" :options="$goals->pluck('goal','id')">Goal</x-form.select>
+    <x-form.input name="when" type="date" :value="old('when')">When?</x-form.input>
+    <x-form.input name="value" type="number" :value="old('count')">Amount</x-form.input>
+    <x-form.select name="type_id" :selected="old('type_id')" :options="$types->pluck('type','id')">Type</x-form.select>
+    <x-form.errors :errors="$errors"></x-form.errors>
+    <x-button type="submit">Add Count</x-button>
 </form>

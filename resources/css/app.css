@@ -7,6 +7,10 @@ h1, h2, h3 {
     font-weight: bold;
 }
 
+h4, h5, h6 {
+    font-weight: bold;
+}
+
 h1 {
     @apply text-4xl;
 }
@@ -17,6 +21,10 @@ h2 {
 
 h3 {
     @apply text-2xl;
+}
+
+h4 {
+    @apply text-xl;
 }
 
 td, th {

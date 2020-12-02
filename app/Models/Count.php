@@ -10,7 +10,7 @@ class Count extends Model
 {
     use HasFactory;
 
-    public $fillable = ['goal_id','value','when','comment'];
+    public $fillable = ['goal_id','value','when','comment','type_id'];
 
     public function goal()
     {
