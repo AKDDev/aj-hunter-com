@@ -28,7 +28,6 @@ class StoreRequest extends FormRequest
             'value' => 'required|integer|min:1',
             'when' => 'required|date',
             'comment' => 'nullable|string',
-            'type_id' => 'required|integer|exists:types,id'
         ];
     }
 }

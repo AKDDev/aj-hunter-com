@@ -59,36 +59,6 @@ class DeleteCountTest extends TestCase
     /**
      * @test
      */
-    public function required_id_field_must_be_existing_count_integer()
-    {
-        $user = User::factory()->create();
-        $count = $this->startup();
-        $ids = [
-            'abc' => 'The id must be an integer.',
-            3 => 'The selected id is invalid.',
-        ];
-
-        foreach($ids as $a => $error) {
-            $data = [
-                'id' => $a,
-            ];
-
-            $response = $this->actingAs($user)
-            ->delete(route('counts.delete',['count' => $count->id]), $data);
-
-            $response->assertStatus(302);
-            $response->assertRedirect();
-            $response->assertSessionHasErrors();
-
-            $errors = session('errors');
-
-            $this->assertEquals($error, ($errors->get('id'))[0]);
-        }
-    }
-
-    /**
-     * @test
-     */
     public function logged_in_user_can_delete_count()
     {
         $user = User::factory()->create();
