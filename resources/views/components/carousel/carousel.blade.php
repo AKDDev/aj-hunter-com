@@ -1,5 +1,5 @@
 <div class="flex flex-col justify-center items-center">
-
+    <!-- https://codepen.io/simeonunder2/pen/povGyVJ -->
     <div
         class="max-w-4xl mx-auto relative"
         x-data="{ activeSlide: 0, slides: {{ $slides  }} }"
@@ -12,14 +12,14 @@
             <div class="flex items-center justify-start w-1/2">
                 <button
                     class="bg-orange-100 text-orange-500 hover:text-orange-900 font-bold hover:shadow-lg rounded-full w-12 h-12 -ml-6"
-                    x-on:click="activeSlide = activeSlide === 0 ? slides.length - 1 : activeSlide">
+                    x-on:click="activeSlide = activeSlide === 0 ? slides.length - 1 : activeSlide - 1">
                     &#8592;
                 </button>
             </div>
             <div class="flex items-center justify-end w-1/2">
                 <button
                     class="bg-orange-100 text-orange-500 hover:text-orange-900 font-bold hover:shadow rounded-full w-12 h-12 -mr-6"
-                    x-on:click="activeSlide = activeSlide === slides.length - 1 ? 0 : activeSlide">
+                    x-on:click="activeSlide = activeSlide === slides.length - 1 ? 0 : activeSlide + 1 ">
                     &#8594;
                 </button>
             </div>
