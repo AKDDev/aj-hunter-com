@@ -15,11 +15,13 @@
         <!-- Fonts -->
         <!--link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap"-->
         <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Satisfy&display=swap" rel="stylesheet">
+        <script src="https://kit.fontawesome.com/d3736a4208.js" crossorigin="anonymous"></script>
         <!-- Styles -->
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 
         <!-- Scripts -->
         <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.7.0/dist/alpine.js" defer></script>
+        <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     </head>
     <body>
         <div class="font-sans text-gray-900 antialiased">

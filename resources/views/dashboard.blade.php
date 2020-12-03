@@ -12,7 +12,7 @@
                 <h2>Active Goals</h2>
                 <div class="flex flex-wrap">
                 @foreach($goals as $goal)
-                    <x-goal :goal="$goal"></x-goal>
+                    <x-goal :goal="$goal" class="md:w-1/2"></x-goal>
                 @endforeach
                 </div>
             </div>

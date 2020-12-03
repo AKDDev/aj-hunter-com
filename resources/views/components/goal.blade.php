@@ -1,9 +1,9 @@
-<div {{ $attributes->merge(['class' => 'w-1/2 p-2']) }}>
-    <div class="w-full border border-orange-500 p-3 rounded">
+<div {{ $attributes->merge(['class' => 'p-2']) }}>
+    <div class="w-full border border-orange-500 p-3 rounded bg-orange-100 bg-opacity-25">
         <h4>{{ $goal->goal }}</h4>
-        <div class="text-sm text-gray-500">{{ $goal->project->project }}</div>
+        <div class="text-sm">{{ $goal->project->project }}</div>
         <div id="goal_{{$goal->id}}"></div>
-        <div class="text-sm text-gray-500">{{ $goal->count->sum('value') }} of {{ $goal->total }} {{ $goal->type->type }}</div>
+        <div class="text-sm">{{ $goal->count->sum('value') }} of {{ $goal->total }} {{ $goal->type->type }}</div>
     </div>
 </div>
 
@@ -26,7 +26,7 @@
                     name: {
                         offsetY: -10,
                         show: true,
-                        color: "#888",
+                        color: "#111",
                         fontSize: "13px"
                     },
                     value: {
