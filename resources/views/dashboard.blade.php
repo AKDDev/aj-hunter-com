@@ -9,6 +9,8 @@
             </div>
 
             <div class="md:flex-1 m-3">
+                <h2>A Year at a Glance</h2>
+                <x-yearly-graph></x-yearly-graph>
                 <h2>Active Goals</h2>
                 <div class="flex flex-wrap">
                 @foreach($goals as $goal)

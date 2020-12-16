@@ -31,3 +31,31 @@ td, th {
     @apply p-2;
     @apply text-left;
 }
+
+#graph {
+    display: grid;
+    grid-template-columns: repeat(53, 15px);
+    grid-template-rows: repeat(7, 15px);
+    grid-auto-flow: column;
+}
+.box {
+    margin: 2px;
+}
+.none {
+    background: rgba(18,45,41, .1);
+}
+.some {
+    background: rgba(18,45,41,.3);;
+}
+.average {
+    background: rgba(18,45,41,.5);;
+}
+.more {
+    background: rgba(18,45,41,.7);;
+}
+.most {
+    background: rgba(18,45,41,.9);;
+}
+.empty {
+    background: #fff;
+}

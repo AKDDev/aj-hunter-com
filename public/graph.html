@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Writing Log</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        #graph {
+            display: grid;
+            grid-template-columns: repeat(53, 20px);
+            grid-template-rows: repeat(7, 20px);
+            grid-auto-flow: column;
+        }
+        .box {
+            margin: 2px;
+        }
+        .none {
+            background: rgba(18,45,41, .1);
+        }
+        .some {
+            background: rgba(18,45,41,.3);;
+        }
+        .average {
+            background: rgba(18,45,41,.5);;
+        }
+        .more {
+            background: rgba(18,45,41,.7);;
+        }
+        .most {
+            background: rgba(18,45,41,.9);;
+        }
+        .empty {
+            background: #fff;
+        }
+    </style>
+</head>
+<body>
+<div id="app" class="container-fluid mt-3">
+    <div class="row">
+        <div class="col text-center">
+            <h1>
+                <button class="btn btn-outline-secondary" @click="changeYear(-1)">&larr;</button>
+                {{ year }}
+                <button class="btn btn-outline-secondary" @click=changeYear(1)>&rarr;</button>
+            </h1>
+        </div>
+    </div>
+    <div class="row">
+    	<div class="col"></div>
+    	<div class="col">
+    		<div id="graph">
+		        <div v-for="n in start" class="empty">
+		        </div>
+		        <div v-for="n in end" class="box" :class="getBackground(n)">
+		        </div>
+		    </div>
+    	</div>
+    	<div class="col"></div>
+	</div>
+	<div class="row mt-3">
+	    <div class="col-2 form-group">
+	        <input type="date" v-model="date" class="form-control"/>
+	    </div>
+	    <div class="col-2 orm-group">
+	        <input type="count" v-model="count" class="form-control" @keyup.enter="updateLog()"/>
+	    </div>
+	    <div class="col-1">
+	        <button class="btn btn-outline-primary" @click="updateLog()">Log</button>
+	    </div>
+	    <div class="col-7">
+	        <h3>Log</h3>
+	        <ul>
+	            <li  v-for="(count, date) in log">
+	                {{ date }}: {{ count }} words
+	            </li>
+	        </ul>
+	    </div>
+	</div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.21/vue.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+<script>
+    const app = new Vue({
+        el: '#app',
+        data: {
+            log: {
+                '2018-01-01': 100,
+                '2018-01-02': 200,
+                '2018-01-03': 400,
+                '2018-01-04': 500,
+            },
+            year: moment().get('year'),
+            max: 0,
+            date: moment().format('YYYY-MM-DD'),
+            count: 0,
+        },
+        computed: {
+            start() {
+                return this.setDate(1).day();
+            },
+            end() {
+                let end = this.setDate(1).endOf('year').dayOfYear();
+                return end;
+            }
+        },
+        methods: {
+            setDate(day) {
+                return moment().set('year',this.year).dayOfYear(day);
+            },
+            setMax() {
+                let max = 0;
+                for(let date in this.log) {
+                    if(this.log[date] > max) {
+                        max = this.log[date];
+                    }
+                }
+                this.max = max;
+            },
+            dayOfWeek(date) {
+                let m = new moment.parse(date);
+
+                return m.day();
+            },
+            getBackground(day) {
+                let date = this.setDate(day),
+                    count = this.log[date.format('YYYY-MM-DD')]
+
+                if(count === undefined) {
+                    return 'none';
+                }
+                else if(count === this.max) {
+                    return 'most';
+                }
+                else if(count <= this.max * .2) {
+                    return 'some';
+                }
+                else if(count <= this.max * .5) {
+                    return 'average';
+                }
+                else if(count <= this.max * .8) {
+                    return 'more';
+                }
+
+                return 'empty';
+            },
+            updateLog() {
+                let count = this.log[this.date];
+                if(count === undefined || count === null || count === 0) {
+                    this.log[this.date] = parseInt(this.count);
+                }
+                else {
+                    this.log[this.date] += parseInt(this.count);
+                }
+                this.date = moment().format('YYYY-MM-DD');
+                this.count = 0;
+                this.setMax();
+            },
+            changeYear(up_down) {
+                this.year += up_down;
+            }
+        },
+        mounted() {
+            this.setMax();
+        }
+    });
+</script>
+
+</body>
+</html
