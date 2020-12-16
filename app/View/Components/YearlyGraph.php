@@ -71,7 +71,7 @@ class YearlyGraph extends Component
             } else if ($count <= $max * .8) {
                 $background[$i] = 'more';
             } else {
-                $background[$i] = 'empty';
+                $background[$i] = 'none';
             }
         }
 
