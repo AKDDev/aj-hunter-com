@@ -60,7 +60,7 @@ class YearlyGraph extends Component
                 return $when->equalTo($date);
             })->count();
 
-            if ($count === 0) {
+            if ($count == 0) {
                 $background[$i] = 'none';
             } else if ($count === $max) {
                 $background[$i] = 'most';
